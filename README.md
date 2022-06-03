@@ -7,10 +7,13 @@ The Bayesian approach to statistics is an alternative and increasingly popular w
 
 ## Course outline
 
-1. The basics:
+### 1. The basics:
+      
       the Bayesian paradigm
+      
       comparative statistical inference
-2. Priors:
+      
+### 2. Priors:
       conjugate priors
       prior elicitation
       reference priors
