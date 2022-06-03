@@ -1,0 +1,267 @@
+---
+title: "Assignment 1"
+author: "Yufei Yin"
+output: pdf_document
+---
+
+# Exercise 1 (2 points): 
+
+Using the pdf of a Beta distribution, show that
+
+$$ \int_0^1 {n \choose y} \theta^y(1-\theta)^{n-y}d\theta= \frac{1}{n+1} $$
+
+## Beta Distribution
+
+- $f(x;\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}$
+\bigskip
+- $\Gamma(\alpha)=(\alpha-1)!$
+\bigskip
+- $\int Beta(\theta|\alpha,\beta)=1$
+
+\bigskip
+
+$\theta^y(1-\theta)^{n-y}$ is the "kernel" of Beta(y+1, n-y+1).
+
+\bigskip
+
+${n \choose y} = \frac{n!}{y!(n-y)!}=\frac{\Gamma(n+1)}{\Gamma(y+1)\Gamma(n-y+1)}$
+
+\bigskip
+
+$Beta(y+1, n-y+1)= \frac{\Gamma(y+1+n-y+1)}{\Gamma(y+1)\Gamma(n-y+1)}\theta^y(1-\theta)^{n-y}$
+$=\frac{\Gamma(n+2)}{\Gamma(y+1)\Gamma(n-y+1)}\theta^y(1-\theta)^{n-y}$
+\bigskip
+
+$\int_0^1{n \choose y}\theta^y(1-\theta)^{n-y}d\theta$
+
+$= \int_0^1 \frac{\Gamma(n+1)}{\Gamma(y+1)\Gamma(n-y+1)}\theta^y(1-\theta)^{n-y}d\theta$
+
+$= \int_0^1\frac{\Gamma(n+2)/(n+1)}{\Gamma(y+1)\Gamma(n-y+1)}\theta^y(1-\theta)^{n-y}d\theta$
+
+$= \frac{1}{n+1}\int_0^1\frac{\Gamma(n+2)}{\Gamma(y+1)\Gamma(n-y+1)}\theta^y(1-\theta)^{n-y}d\theta$
+
+$= \frac{1}{n+1}$
+
+\newpage
+
+# Exercise 2 (2 points): 
+
+Consider the Election Example from the lecture slides, specifically the case when more data are observed. Show that the following two approaches provide the same results:
+
+1. We start with our original prior, Beta(5.5, 4.5), update our prior based on the first set of data (10 likely voters are surveyed, 3 of whom say they will vote for candidate A), and use the resulting posterior as our new prior and update it based on the second set of data (an additional 20 likely voters are surveyed, 12 of whom say they will vote for candidate A).
+
+2. We combine the two data sets and use them to update our original Beta(5.5, 4.5) prior distribution.
+
+\bigskip
+
+$y|\theta \sim Binomial(n,\theta) \; with \; \theta \sim Beta(\alpha,\beta)$
+
+$\theta|y \sim Beta(\alpha+y,\beta+n-y)$
+
+\bigskip
+
+1. 
+
+original prior distribution Beta(5.5, 4.5), $n_1=10 \;\;\; y_1=3$
+
+posterior distribution Beta(5.5+3, 4.5+10-3) = Beta(8.5, 11.5)
+
+updated prior distribution, new prior Beta(8.5, 11.5) $n_2=20 \;\;\; y_2=12$
+
+posterior distribution Beta(8.5+12, 11.5+20-12) = Beta(20.5, 19.5)
+
+\bigskip
+
+2.
+
+original prior distribution Beta(5.5, 4.5), $n = n_1 + n_2=10+20=30 \;\;\; y=y_1+y_2=3+12=15$
+
+posterior distribution Beta(5.5+15, 4.5+30-15) = Beta(20.5, 19.5)
+
+\bigskip
+
+So these two approaches provides the same results.
+
+\newpage
+
+# Exercise 3 (2 points) and 4 (4 points): 
+For Exercises 3 and 4, please do Chapter 2 Exercises 1 and 5 from Bayesian Data Analysis, 3rd Edition (Gelman et al.), which is linked to from the course Canvas page. Note that for the Chapter 2 Exercise 5 from BDA3, you may use your result from Exercise 1 assigned to you above, i.e.,
+
+$$ \int_0^1 {n \choose y} \theta^y(1-\theta)^{n-y}d\theta= \frac{1}{n+1} $$
+
+## Chapter 2 Exercises 1
+
+Posterior inference: suppose you have a Beta(4, 4) prior distribution on the probability $\theta$ that a coin will yield a ‘head’ when spun in a specified manner. The coin is independently spun ten times, and ‘heads’ appear fewer than 3 times. You are not told how many heads were seen, only that the number is less than 3. Calculate your exact posterior density (up to a proportionality constant) for $\theta$ and sketch it.
+
+$n=10 \;\;\;x<3$
+
+$x|\theta \sim Binomial(n,\theta)$
+
+\bigskip
+
+### Binomial(n,$\theta$) distribution
+
+$P(x|n,\theta)={n \choose x}\theta^x(1-\theta)^{n-x}$
+
+\bigskip
+
+### prior distribution 
+
+$\theta \sim \frac{\Gamma(8)}{\Gamma(4)\Gamma(4)}\theta^3(1-\theta)^3 \propto \theta^3(1-\theta)^3$
+
+\bigskip
+
+### likelihood function (x<3)
+
+$\sum_{i=0}^2P(x=i|\theta)$
+
+$={10 \choose 0}\theta^0(1-\theta)^{10}+{10 \choose1}\theta^1(1-\theta)^9+{10 \choose 2}\theta^2(1-\theta)^8$
+
+$=(1-\theta)^{10}+10\theta(1-\theta)^9+45\theta^2(1-\theta)^8$
+
+\bigskip
+
+### posterior distribution
+
+$P(\theta|x) \propto P(x<3|\theta)P(\theta)$
+
+$\propto [(1-\theta)^{10}+10\theta(1-\theta)^9+45\theta^2(1-\theta)^8]\times[\theta^3(1-\theta)^3]$
+
+$\propto \theta^3(1-\theta)^{13}+10\theta^4(1-\theta)^{12}+45\theta^5(1-\theta)^{11}$
+
+```{r, echo=FALSE}
+theta <- seq(0,1,.01)
+dens <- theta^3*(1-theta)^13 + 10*theta^4*(1-theta)^12 + 45*theta^5*(1-theta)^11
+plot (theta, dens, 
+      ylim = c(0,1.1*max(dens)),
+      main = expression(paste("Posterior density for ", italic(theta))),
+      xlab = expression(theta),
+      ylab = "density",
+      type = "l")
+```
+
+\newpage
+
+## Chapter 2 Exercises 5
+
+Posterior distribution as a compromise between prior information and data: let y be the number of heads in n spins of a coin, whose probability of heads is $\theta$.
+
+(a) If your prior distribution for $\theta$ is uniform on the range [0, 1], derive your prior predictive distribution for y,
+
+$$Pr(y=k)=\int_0^1Pr(y=k|\theta)d\theta,$$ 
+for each k = 0, 1, . . . , n.
+
+\bigskip
+
+$Pr(y=k)=\int_0^1Pr(y=k|\theta)d\theta$
+
+$= \int_0^1{n \choose k}\theta^k(1-\theta)^{n-k}d\theta$
+
+$= \frac{1}{n+1}$
+
+\newpage
+
+(b) Suppose you assign a Beta($\alpha$, $\beta$) prior distribution for $\theta$, and then you observe y heads out of n spins. Show algebraically that your posterior mean of $\theta$ always lies between your prior mean, $\frac{\alpha}{\alpha+\beta}$, and the observed relative frequency of heads, $\frac{y}{n}$.
+
+\bigskip
+
+### prior distribution 
+
+Beta($\alpha$, $\beta$)
+
+### posterior distribution 
+
+Beta($\alpha+y$, $\beta+n-y$)
+
+### posterior mean
+
+$E(\theta|y) = \frac{\alpha+y}{\alpha+y+\beta+n-y}=\frac{\alpha+y}{\alpha+\beta+n}$
+
+$E(\theta|y)$ is always lies between prior mean, $\frac{\alpha}{\alpha+\beta}$, and the observed relative frequency of heads, $\frac{y}{n}$.
+
+### proof
+
+$E(\theta|y)= \lambda(\frac{y}{n})+(1-\lambda)(\frac{\alpha}{\alpha+\beta})$ , $\lambda \in (0,1)$
+
+$\frac{\alpha+y}{\alpha+\beta+n} = \lambda(\frac{y}{n}-\frac{\alpha}{\alpha+\beta})+\frac{\alpha}{\alpha+\beta}$
+
+$\frac{\alpha+y}{\alpha+\beta+n}-\frac{\alpha}{\alpha+\beta} = \lambda[\frac{(\alpha+\beta)y-\alpha n}{(\alpha+\beta)n}]$
+
+$\frac{(\alpha+y)(\alpha+\beta)-\alpha(\alpha+\beta+n)}{(\alpha+\beta+n)(\alpha+\beta)}=\lambda[\frac{\alpha y+\beta y-\alpha n}{(\alpha+\beta)n}]$
+
+$\frac{\alpha^2+\alpha\beta+\alpha y+\beta y-\alpha^2-\alpha\beta-\alpha n}{(\alpha+\beta+n)(\alpha+\beta)}=\lambda[\frac{\alpha y+\beta y-\alpha n}{(\alpha+\beta)n}]$
+
+$\frac{\alpha y+\beta y-\alpha n}{(\alpha+\beta+n)(\alpha+\beta)}=\lambda[\frac{\alpha y+\beta y-\alpha n}{(\alpha+\beta)n}]$
+
+$\lambda=\frac{\alpha y+\beta y-\alpha n}{(\alpha+\beta+n)(\alpha+\beta)}\times\frac{(\alpha+\beta)n}{\alpha y+\beta y-\alpha n}$
+
+$\lambda=\frac{n}{\alpha+\beta+n}$, $\lambda \in (0,1)$
+
+\newpage
+
+(c) Show that, if the prior distribution on $\theta$ is uniform, the posterior variance of $\theta$ is always less than the prior variance.
+
+### prior distribution
+
+Beta(1, 1)
+
+### posterior distribution
+
+Beta(1+y, 1+n-y)
+
+### prior variance
+
+$var(\theta)=\frac{1}{12}$
+
+### posterior variance
+
+$var(\theta|y)=\frac{(1+y)(1+n-y)}{(2+n)^2(3+n)}$
+
+### Proof
+
+$var(\theta|y)=\frac{(1+y)(1+n-y)}{(2+n)^2(3+n)} < var(\theta)=\frac{1}{12}$
+
+$var(\theta|y)=\frac{(1+y)(1+n-y)}{(2+n)^2(3+n)}=\frac{1+y}{2+n}\times\frac{1+n-y}{2+n}\times\frac{1}{3+n}$
+
+Because $1+y+1+n-y=2+n$, $\frac{1+y}{2+n}\times\frac{1+n-y}{2+n} \leq \frac{1}{4}$. 
+
+And $\frac{1}{3+n} <\frac{1}{3}$.
+
+Overall, $var(\theta|y)=\frac{(1+y)(1+n-y)}{(2+n)^2(3+n)}=\frac{1+y}{2+n}\times\frac{1+n-y}{2+n}\times\frac{1}{3+n} < var(\theta)=\frac{1}{12}$
+
+\newpage
+
+(d) Give an example of a Beta($\alpha$ ,$\beta$) prior distribution and data y, n, in which the posterior variance of $\theta$ is higher than the prior variance.
+
+The prior variance is larger than the posterior variance on average.
+
+However, it's possible that $var(\theta) < var(\theta|y)$
+
+This is often evidence of model misspecification.The prior does not agree with the data!
+
+For example,
+
+### prior distribution
+
+Beta(10, 1)
+
+n = 10, y = 3
+
+### posterior distribution
+
+Beta(10+3, 1+10-3) = Beta(13, 8)
+
+### prior variance
+
+$var(\theta)=\frac{10\times1}{(10+1)^2(10+1+1)}=\frac{5}{726}\approx6.887\times10^{-3}$
+
+### posterior variance
+
+$var(\theta|y)=\frac{13\times8}{(13+8)^2(13+8+1)}=\frac{52}{4851}\approx1.072\times10^{-2}$
+
+$1.072\times10^{-2} > 6.887\times10^{-3}$
+
+In this example, the posterior variance of $\theta$ is higher than the prior variance.
+
+
+
